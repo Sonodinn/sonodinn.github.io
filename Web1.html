@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 웹사이트</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="3d-model"></div> <!-- 3D 모델이 들어갈 div -->
+    </div>
+
+    <!-- Three.js 라이브러리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Three.js로 만든 3D 모델을 불러오고 애니메이션하는 스크립트 -->
+    <script>
+        // Three.js를 사용하여 움직이는 3D 모델 생성하기
+
+        // Scene 생성
+        const scene = new THREE.Scene();
+
+        // Camera 생성
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Renderer 생성
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('3d-model').appendChild(renderer.domElement);
+
+        // CubeGeometry와 MeshBasicMaterial을 사용하여 모델 생성
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // 애니메이션 루프 설정
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
